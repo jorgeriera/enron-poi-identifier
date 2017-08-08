@@ -1,0 +1,5 @@
+https://stackoverflow.com/questions/33091376/python-what-is-exactly-sklearn-pipeline-pipeline
+
+https://stackoverflow.com/questions/35388647/how-to-use-gridsearchcv-output-for-a-scikit-prediction
+
+https://stackoverflow.com/questions/40400351/nested-cross-validation-with-stratifiedshufflesplit-in-sklearn
