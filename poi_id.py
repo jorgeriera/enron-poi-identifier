@@ -63,14 +63,6 @@ data = featureFormat(my_dataset, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
 ### Task 4: Try a varity of classifiers
-### Please name your classifier clf for easy export below.
-### Note that if you want to do PCA or other multi-stage operations,
-### you'll need to use Pipelines. For more info:
-### http://scikit-learn.org/stable/modules/pipeline.html
-
-
-# Provided to give you a starting point. Try a variety of classifiers.
-
 clf_NB = GaussianNB()
 clf_DT = tree.DecisionTreeClassifier(random_state = 71)
 kmeans = KMeans(n_clusters = 2, random_state=0, n_init = 50)
@@ -79,14 +71,10 @@ clf_RF = RandomForestClassifier(n_estimators = 5, criterion = 'entropy', min_sam
 clf_KNN = KNeighborsClassifier(n_neighbors = 1, algorithm = 'ball_tree', weights = 'uniform', leaf_size = 1)
 cv = StratifiedShuffleSplit(n_splits = 100)
 
-### Task 5: Tune your classifier to achieve better than .3 precision and recall 
-### using our testing script. Check the tester.py script in the final project
-### folder for details on the evaluation method, especially the test_classifier
-### function. Because of the small size of the dataset, the script uses
+### Task 5: Tune classifier to achieve best results
+### Because of the small size of the dataset, the script uses
 ### stratified shuffle split cross validation. For more info: 
 ### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
-
-# Example starting point. Try investigating other evaluation techniques!
 
 features_train, features_test, labels_train, labels_test = \
     train_test_split(features, labels, test_size=0.3, random_state=42)
@@ -95,7 +83,6 @@ features_train, features_test, labels_train, labels_test = \
 scaler = MinMaxScaler()
 rescaled_features_train = scaler.fit_transform(features_train)
 rescaled_features_test = scaler.fit_transform(features_test)
-
 
 """PCA"""
 #set up PCA to explain pre-selected % of variance (perc_var)
@@ -152,10 +139,7 @@ pipeline = Pipeline([("features", selection), ("dt", clf_DT)])
 clf = pipeline.fit(features_train, labels_train)
 
 
-### Task 6: Dump your classifier, dataset, and features_list so anyone can
-### check your results. You do not need to change anything below, but make sure
-### that the version of poi_id.py that you submit can be run on its own and
-### generates the necessary .pkl files for validating your results.
-
+### Task 6: Dump classifier, dataset, and features_list so it can
+### best tested using tester.py
 dump_classifier_and_data(clf, my_dataset, features_list)
 
