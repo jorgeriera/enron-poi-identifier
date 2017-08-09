@@ -32,7 +32,10 @@ with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
 
 ### Task 2: Remove outliers
+
 data_dict.pop('TOTAL', 0)
+data_dict.pop('TRAVEL AGENCY IN THE PARK', 0)
+data_dict.pop('LOCKHART EUGENE E', 0)
 
 ### Task 3: Create new feature(s)
 """Function to check for NaN values"""
@@ -119,11 +122,11 @@ param_grid = dict(features__pca__n_components = [None, 1, 2, 3, 4, 5, 6],
                   features__univ_select__k = [1, 2, 3, 4, 5, 6])
 
 #Create GridSearch object
-#gs = GridSearchCV(pipeline, param_grid = param_grid, verbose = 10, scoring = 'f1', cv = cv)
+gs = GridSearchCV(pipeline, param_grid = param_grid, verbose = 10, scoring = 'f1', cv = cv)
 
 #Fit to data and determine best estimator
-#gs.fit(features_train, labels_train)
-#print 'best feature parameters:', (gs.best_estimator_)
+gs.fit(features_train, labels_train)
+print 'best feature parameters:', (gs.best_estimator_)
 
 #Adjust SelectKBest to reflect best parameter tune of k = 3
 selection = SelectKBest(k = 3)
@@ -145,8 +148,7 @@ print 'best decision tree parameters:', (gs.best_estimator_)
 
 #Create classifier for output
 clf_DT = tree.DecisionTreeClassifier(criterion = 'entropy', min_samples_split = 3)
-pipeline = Pipeline([('scaler', MinMaxScaler(copy=True, feature_range=(0, 1))), ("features", selection),
-                     ("dt", clf_DT)])
+pipeline = Pipeline([("features", selection), ("dt", clf_DT)])
 clf = pipeline.fit(features_train, labels_train)
 
 
